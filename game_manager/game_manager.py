@@ -8,7 +8,7 @@ from PyQt5.QtGui import QPainter, QColor
 
 from board_manager import BOARD_DATA, Shape
 from block_controller import BLOCK_CONTROLLER
-from block_controller_sample import BLOCK_CONTROLLER_SAMPLE
+from block_controller_edit import BLOCK_CONTROLLER_EDIT
 
 from argparse import ArgumentParser
 import time
@@ -194,7 +194,7 @@ class Game_Manager(QMainWindow):
                 GameStatus = self.getGameStatus()
 
                 if self.use_sample == "y":
-                    self.nextMove = BLOCK_CONTROLLER_SAMPLE.GetNextMove(nextMove, GameStatus)
+                    self.nextMove = BLOCK_CONTROLLER_EDIT.GetNextMove(nextMove, GameStatus)
                 else:
                     self.nextMove = BLOCK_CONTROLLER.GetNextMove(nextMove, GameStatus)
 
