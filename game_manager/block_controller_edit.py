@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from board_manager import BOARD_DATA, Shape
 import pprint
 import copy
 
@@ -43,44 +44,53 @@ class Block_Controller(object):
         self.board_data_width = GameStatus["field_info"]["width"]
         self.board_data_height = GameStatus["field_info"]["height"]
         self.ShapeNone_index = GameStatus["debug_info"]["shape_info"]["shapeNone"]["index"]
-
+        print(Gamestatus)
         # search best nextMove -->
-        strategy = None
-        LatestEvalValue = -100000
-        # search with current block Shape
-        for direction0 in CurrentShapeDirectionRange:
-            # search with x range
-            x0Min, x0Max = self.getSearchXRange(self.CurrentShape_class, direction0)
-            for x0 in range(x0Min, x0Max):
-                # get board data, as if dropdown block
-                board = self.getBoard(self.board_backboard, self.CurrentShape_class, direction0, x0)
+        if status:    
+            strategy = (0, 9, 1, 1)
+            nextMove["strategy"]["direction"] = strategy[0]
+            nextMove["strategy"]["x"] = strategy[1]
+            nextMove["strategy"]["y_operation"] = strategy[2]
+            nextMove["strategy"]["y_moveblocknum"] = strategy[3] 
+            return nextMove
+        else:
+            print(Gamestatus)
+            strategy = None
+            LatestEvalValue = -100000
+            # search with current block Shape
+            for direction0 in CurrentShapeDirectionRange:
+                # search with x range
+                x0Min, x0Max = self.getSearchXRange(self.CurrentShape_class, direction0)
+                for x0 in range(x0Min, x0Max):
+                    # get board data, as if dropdown block
+                    board = self.getBoard(self.board_backboard, self.CurrentShape_class, direction0, x0)
 
-                # evaluate board
-                EvalValue = self.calcEvaluationValueSample(board)
-                # update best move
-                if EvalValue > LatestEvalValue:
-                    strategy = (direction0, x0, 1, 1)
-                    LatestEvalValue = EvalValue
+                    # evaluate board
+                    EvalValue = self.calcEvaluationValueSample(board)
+                    # update best move
+                    if EvalValue > LatestEvalValue:
+                        strategy = (direction0, x0, 1, 1)
+                        LatestEvalValue = EvalValue
 
-                ###test
-                ###for direction1 in NextShapeDirectionRange:
-                ###  x1Min, x1Max = self.getSearchXRange(self.NextShape_class, direction1)
-                ###  for x1 in range(x1Min, x1Max):
-                ###        board2 = self.getBoard(board, self.NextShape_class, direction1, x1)
-                ###        EvalValue = self.calcEvaluationValueSample(board2)
-                ###        if EvalValue > LatestEvalValue:
-                ###            strategy = (direction0, x0, 1, 1)
-                ###            LatestEvalValue = EvalValue
-        # search best nextMove <--
+                        ###test
+                        ###for direction1 in NextShapeDirectionRange:
+                        ###  x1Min, x1Max = self.getSearchXRange(self.NextShape_class, direction1)
+                        ###  for x1 in range(x1Min, x1Max):
+                        ###        board2 = self.getBoard(board, self.NextShape_class, direction1, x1)
+                        ###        EvalValue = self.calcEvaluationValueSample(board2)
+                        ###        if EvalValue > LatestEvalValue:
+                        ###            strategy = (direction0, x0, 1, 1)
+                        ###            LatestEvalValue = EvalValue
+                        # search best nextMove <--
 
-        print("===", datetime.now() - t1)
-        nextMove["strategy"]["direction"] = strategy[0]
-        nextMove["strategy"]["x"] = strategy[1]
-        nextMove["strategy"]["y_operation"] = strategy[2]
-        nextMove["strategy"]["y_moveblocknum"] = strategy[3]
-        print(nextMove)
-        print("###### SAMPLE CODE ######")
-        return nextMove
+                        print("===", datetime.now() - t1)
+                        nextMove["strategy"]["direction"] = strategy[0]
+                        nextMove["strategy"]["x"] = strategy[1]
+                        nextMove["strategy"]["y_operation"] = strategy[2]
+                        nextMove["strategy"]["y_moveblocknum"] = strategy[3]
+                        print(nextMove)
+                        print("###### SAMPLE CODE ######")
+                        return nextMove
 
     def getSearchXRange(self, Shape_class, direction):
         #
@@ -233,5 +243,5 @@ class Block_Controller(object):
         return score
 
 
-BLOCK_CONTROLLER_SAMPLE = Block_Controller()
+BLOCK_CONTROLLER_EDIT = Block_Controller()
 
