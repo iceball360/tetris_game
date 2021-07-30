@@ -46,7 +46,6 @@ class Block_Controller(object):
         # search best nextMove -->
         print(GameStatus)
         if GameStatus['block_info']['currentShape']['index'] == 1:
-                    if maxHeight
         #maxHeight = max(BlockMaxY) - fullLines
             strategy = (0, 9, 1, 1)
             nextMove["strategy"]["direction"] = strategy[0]
@@ -89,7 +88,6 @@ class Block_Controller(object):
             nextMove["strategy"]["y_operation"] = strategy[2]
             nextMove["strategy"]["y_moveblocknum"] = strategy[3]
             print(nextMove)
-            print("###### SAMPLE CODE ######")
             return nextMove
 
     def getSearchXRange(self, Shape_class, direction):
@@ -230,10 +228,10 @@ class Block_Controller(object):
 
         # calc Evaluation Value
         score = 0
-        score = score + fullLines * 0.0           # try to delete line 
-        score = score - nHoles * 1.0               # try not to make hole
+        score = score + fullLines * 1.0           # try to delete line 
+        score = score - nHoles * 3.0               # try not to make hole
         score = score - nIsolatedBlocks * 1.0      # try not to make isolated block
-        score = score - absDy * 1.0                # try to put block smoothly
+        score = score - absDy * 2.0                # try to put block smoothly
         #score = score - maxDy * 0.3                # maxDy
         #score = score - maxHeight * 5              # maxHeight
         #score = score - stdY * 1.0                 # statistical data
